@@ -1,0 +1,10 @@
+Algumas artimanhas python
+
+
+Parâmetros do print:
+print("nome", "idade", "sexo", sep=';')      #muda os separadores dentro do print
+
+print("nome", "idade", "sexo", end = '\n')   #muda a direção em que os elementos são printados. no caso do '\n' ele printa de baixo um do outro e o '\r' faz a mesma coisa só que printa do último ao primeiro em sequencia. 
+
+help(função)        #Exibe algumas informações de ajuda da função informada
+
