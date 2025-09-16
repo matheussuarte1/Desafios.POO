@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Extrato{% endblock %}
+{% block content %}
+<h2>Extrato da Conta</h2>
+{% if conta.extrato %}
+  <ul>
+  {% for operacao in conta.extrato %}
+    <li>{{ operacao }}</li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>Não há operações registradas.</p>
+{% endif %}
+{% endblock %}

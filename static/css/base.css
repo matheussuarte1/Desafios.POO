@@ -1,0 +1,16 @@
+#Titulo {
+color:rgb(59, 59, 59)
+}
+
+#opções_de_ação{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin: auto;
+
+}
+body {
+background-color: rgb(221, 235, 247);
+
+
+}

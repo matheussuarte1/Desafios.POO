@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Banco Digital{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/base.css">
+</head>
+<body>
+  <h1 id="Titulo">Banco nova ordem</h1>
+  <nav id = "opções_de_ação">
+    {% if session.agencia %}
+      <a href="{{ url_for('home') }}">Home</a> |
+      <a href="{{ url_for('pix') }}">Pix</a> |
+      <a href="{{ url_for('alterar_limite') }}">Alterar Limite</a> |
+      <a href="{{ url_for('alterar_senha') }}">Alterar Senha</a> |
+      <a href="{{ url_for('extrato') }}">Extrato</a> |
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+  </nav>
+  <hr>
+  {% with mensagens = get_flashed_messages() %}
+    {% if mensagens %}
+      <ul>
+        {% for m in mensagens %}
+          <li>{{ m }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</body>
+</html>

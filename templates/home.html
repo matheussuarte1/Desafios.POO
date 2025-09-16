@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h2>Bem-vindo, {{ conta.nome }}</h2>
+<p><strong>Agência:</strong> {{ conta.agencia }} | <strong>Conta:</strong> {{ conta.numero }}</p>
+<p><strong>Saldo:</strong> R$ {{ "%.2f"|format(conta.saldo) }} | <strong>Limite:</strong> R$ {{ "%.2f"|format(conta.limite) }}</p>
+
+{% if conta.chave_pix %}
+<p><strong>Sua chave Pix:</strong> {{ conta.chave_pix }}</p>
+{% else %}
+<p><em>Não existe chave Pix cadastrada.</em></p>
+{% endif %}
+{% endblock %}
