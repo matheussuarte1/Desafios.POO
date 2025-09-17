@@ -57,25 +57,31 @@ class Conta:
         destino = next((c for c in Conta.contas.values() if c.chave_pix == chave_destino), None)
         if destino:
             if self.saldo + self.limite >= valor:
-                self.saldo -= valor
+                # Calcula quanto usar do saldo e quanto do limite
+                if self.saldo >= valor:
+                    self.saldo -= valor
+                else:
+                    restante = valor - self.saldo
+                    self.saldo = 0
+                    self.limite -= restante  # desconta do limite
                 destino.saldo += valor
                 self.registrar_operacao(f"Pix enviado: -{valor:.2f} para {chave_destino}")
                 destino.registrar_operacao(f"Pix recebido: +{valor:.2f} de {self.nome}")
                 return True, f"Pix de {valor:.2f} enviado para {chave_destino}."
             else:
                 return False, "Saldo e limite insuficientes."
-        else:
-            return False, "Chave Pix não encontrada."
+
 
 
 # ------------------------------
 # APP FLASK
 # ------------------------------
-app = Flask(__name__)
+app = Flask(__name__)         #Criando o app com flask
 app.secret_key = "chave_secreta"
 
 # Criar conta de teste
 Conta.criar_conta("João Silva", "001", "12345", "1234")
+Conta.criar_conta("Jorge", "003", "123", "123")
 
 def conta_logada():
     if "agencia" in session and "numero" in session:
