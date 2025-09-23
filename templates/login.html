@@ -3,15 +3,42 @@
 {% block content %}
 <div class="login-container">
   <h2>Login</h2>
-  <form method="POST">
+  <!-- Desativa o autocomplete do navegador -->
+  <form method="POST" autocomplete="off">
     <label for="agencia">Agência:</label>
-    <input type="text" id="agencia" name="agencia" required>
+    <input 
+      type="text" 
+      id="agencia" 
+      name="agencia" 
+      autocomplete="off" 
+      required
+    >
 
     <label for="conta">Conta:</label>
-    <input type="text" id="conta" name="conta" required>
+    <input 
+      type="text" 
+      id="conta" 
+      name="conta" 
+      autocomplete="off" 
+      required
+    >
 
     <label for="senha">Senha:</label>
-    <input type="password" id="senha" name="senha" required>
+    <input 
+      type="password" 
+      id="senha" 
+      name="senha" 
+      autocomplete="new-password" 
+      autocapitalize="off" 
+      spellcheck="false" 
+      required
+    >
+    <input 
+      type="text" 
+      style="display:none" 
+      autocomplete="username"
+    >
+
 
     <button type="submit">Entrar</button>
   </form>

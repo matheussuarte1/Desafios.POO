@@ -81,7 +81,7 @@ app = Flask(__name__)         #Criando o app com flask
 app.secret_key = "chave_secreta"
 
 # Criar conta de teste
-Conta.criar_conta("João Silva", "001", "12345", "1234", 400)
+Conta.criar_conta("João Silva", "001", "1234", "1234", 400)
 Conta.criar_conta("Jorge", "003", "123", "123", 450)
 
 def conta_logada():
