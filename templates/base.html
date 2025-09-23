@@ -8,7 +8,7 @@
 </head>
 <body>
   <header>
-    <div class="logo">Banco nova ordem</div>
+    <div class="logo">BANK</div>
     <nav>
       {% if session.agencia %}
         <a href="{{ url_for('home') }}">Home</a> 
@@ -23,10 +23,10 @@
 
     </nav>
     <p class="info_conta">
-      {% if conta %}
-        <span>Agência:</span>{{ conta.agencia }} |
-        <span>Conta:</span>{{ conta.numero }}
-      {% endif %}
+  {% if conta %}
+    <span>Agência:</span>{{ conta.agencia }} |
+    <span>Conta:</span>{{ conta.numero }}
+  {% endif %}
 </p>
   </header>
 

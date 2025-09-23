@@ -18,7 +18,11 @@ header .logo {
     font-weight: bold;
     font-size: 1.5em;
     color: #043a8d;
+    margin-left: 200px;
     
+}
+.info_conta {
+  margin-right: 200px;  /* aumenta o afastamento da borda direita */
 }
 
 .saldo-limite {
@@ -39,6 +43,7 @@ header .logo {
 body {
 background-color: rgb(221, 235, 247);
 font-size: 16px;
+
 
 }
 .login-container {
@@ -103,7 +108,8 @@ font-size: 16px;
 }
 /* Container principal das informações */
 #main_home {
-  padding: 20px;
+  padding-top: 25px;
+  padding-left: 220px;
 }
 
 /* Bem-vindo e info conta */
@@ -148,7 +154,7 @@ header nav {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 40px;
+    gap: 80px;
     align-items: center;
 
 }

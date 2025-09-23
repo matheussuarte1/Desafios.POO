@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from datetime import datetime
 
 # ------------------------------
 # CLASSES (POO)
@@ -37,15 +38,13 @@ class Conta:
 
     def alterar_limite(self, novo_limite):
         self.limite = novo_limite
-        self.registrar_operacao(f"Limite alterado para {novo_limite:.2f}")
+        self.registrar_operacao(f"[{datetime.now():%Y-%m-%d %H:%M:%S}] Limite alterado para {novo_limite:.2f}")
 
     def alterar_senha(self, nova_senha):
         self.senha = nova_senha
-        self.registrar_operacao("Senha alterada")
 
     def cadastrar_pix(self, chave):
         self.chave_pix = chave
-        self.registrar_operacao(f"Chave Pix cadastrada: {chave}")
 
     def fazer_pix(self, chave_destino, valor):
         if self.chave_pix == chave_destino:
@@ -71,8 +70,8 @@ class Conta:
             self.limite -= restante
 
         destino.saldo += valor
-        self.registrar_operacao(f"Pix enviado: -{valor:.2f} para {chave_destino}")
-        destino.registrar_operacao(f"Pix recebido: +{valor:.2f} de {self.nome}")
+        self.registrar_operacao(f"[{datetime.now():%Y-%m-%d %H:%M:%S}] Pix enviado: -{valor:.2f} para {chave_destino}")
+        destino.registrar_operacao(f"[{datetime.now():%Y-%m-%d %H:%M:%S}] Pix recebido: +{valor:.2f} de {self.nome}")
         return True, f"Pix de {valor:.2f} enviado para {chave_destino}"
 
 # ------------------------------

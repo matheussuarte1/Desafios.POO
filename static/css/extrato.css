@@ -1,0 +1,21 @@
+.extrato_container {
+  background-color: #f8fbfd;  /* tom azul claro */
+  border-radius: 4px;
+  padding: 20px;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin: 20px auto;
+}
+
+.extrato_container h2 {
+    color: #004080;  /* azul escuro para destaque */
+    margin-bottom: 10px;
+    font-size: medium;
+}
+.extrato_container ul {
+    margin-left: 15px;
+}
+
+ul li {
+  margin-bottom: 10px; /* Espaço de 10px entre os itens */
+}

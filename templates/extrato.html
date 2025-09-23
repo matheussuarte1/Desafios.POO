@@ -1,14 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Extrato{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/extrato.css') }}">
+{% endblock %}
+
 {% block content %}
-<h2>Extrato da Conta</h2>
-{% if conta.extrato %}
-  <ul>
-  {% for operacao in conta.extrato %}
-    <li>{{ operacao }}</li>
-  {% endfor %}
-  </ul>
-{% else %}
-  <p>Não há operações registradas.</p>
-{% endif %}
+<div class="extrato_container">
+  <h2>Extrato da Conta</h2>
+  {% if conta.extrato %}
+    <ul>
+    {% for operacao in conta.extrato %}
+      <li>{{ operacao }}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>Não há operações registradas.</p>
+  {% endif %}
+</div>
 {% endblock %}
