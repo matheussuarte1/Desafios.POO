@@ -1,0 +1,65 @@
+/* Container for main content */
+.container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #e3f0fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    color: #004080;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+/* Input field styling */
+input[type="number"] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+input[type="number"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* Button styling */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+button[type="submit"]:active {
+    background-color: #004085;
+    transform: translateY(0);
+}
+
+/* Optional: Styling for labels/text around inputs */
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}

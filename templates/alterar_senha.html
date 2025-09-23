@@ -1,9 +1,34 @@
 {% extends "base.html" %}
 {% block title %}Alterar Senha{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/alterar_senha.css') }}">
+{% endblock %}
 {% block content %}
-<h2>Alterar Senha</h2>
-<form method="POST">
-  Nova Senha: <input type="password" name="nova_senha" required><br>
-  <button type="submit">Alterar</button>
-</form>
+<div class="container">
+    <h2>Alterar Senha</h2>
+
+    
+    {% if erro %}
+        <p class="erro">{{ erro }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <label for="senha_atual_input">Senha Atual:</label>
+        <input type="password" id="senha_atual_input" name="senha_atual" required>
+
+        <label for="nova_senha_input">Nova Senha:</label>
+        <input type="password" id="nova_senha_input" name="nova_senha" required>
+
+        <button type="submit">Alterar</button>
+    </form>
+     {% with messages = get_flashed_messages(category_filter=["senha"]) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for msg in messages %}
+            <p>{{ msg }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+</div>
 {% endblock %}

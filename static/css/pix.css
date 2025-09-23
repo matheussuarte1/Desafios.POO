@@ -1,0 +1,85 @@
+/* Container geral */
+.pix-container {
+  background-color: #e3f0fa;  /* tom azul claro */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Títulos */
+.pix-container h2,
+.pix-container h3 {
+  color: #004080;  /* azul escuro para destaque */
+  margin-bottom: 10px;
+}
+
+/* Parágrafos */
+.pix-container p {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Formulários */
+.pix-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Mensagem de erro */
+.flash-messages {
+  color: red;
+  font-size: 14px;
+  margin-top: 14px;
+  margin-left: 14px;
+  text-align: left;
+  display: block;
+}
+
+/* Labels mais consistentes */
+.pix-form label {
+  font-weight: 500;
+  color: #070707;
+  font-family: inherit;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* Inputs ajustados */
+.pix-form input[type="text"],
+.pix-form input[type="number"] {
+  padding: 10px;
+  border: 0.5px solid #ced4da;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+.pix-form input:focus {
+  border-color: #004080;
+  outline: none;
+}
+
+/* Botões */
+.pix-form button {
+  background-color: #004080;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pix-form button:hover {
+  background-color: #0066cc;
+}
+/* Linha divisória */
+.pix-container hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #b0c4de;
+}
+

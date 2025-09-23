@@ -5,22 +5,22 @@
     font-family: Arial, sans-serif;
 }
 header {
+    height: 60px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
+    padding: 20px 20px;
     background-color: #bfdffb;
     border-bottom: 1px solid #ddd;
 }
 header .logo {
+    display: flex;
+    align-items: center;
     font-weight: bold;
     font-size: 1.5em;
     color: #043a8d;
+    
 }
-.info-usuario h2 {
-    font-size: 1.4em;
-    margin-bottom: 10px;
-}
+
 .saldo-limite {
     margin-top: 30px;
     display: flex;
@@ -38,7 +38,7 @@ header .logo {
 }
 body {
 background-color: rgb(221, 235, 247);
-
+font-size: 16px;
 
 }
 .login-container {
@@ -92,34 +92,76 @@ background-color: rgb(221, 235, 247);
 .login-container button:hover {
     background-color: #0b5ed7;
 }
+
+.limite-box span {
+    color: #70720e;
+    font-weight: bold;
+}
+.saldo-box span{
+    color: rgb(0, 95, 43);
+    font-weight: bold;
+}
 /* Container principal das informações */
-.info-usuario {
-    background-color: #e9f4ff; /* Fundo leve */
-    padding: 25px;             /* Espaço interno maior */
-    border-radius: 10px;
-    margin: 40px auto;         /* Espaço externo */
-    max-width: 500px;          /* Largura máxima centralizada */
-    text-align: left;          /* Alinhamento */
+#main_home {
+  padding: 20px;
 }
 
-.info-usuario h2 {
-    margin-bottom: 20px;       /* Distância do próximo elemento */
-    font-size: 1.6em;
-    color: #000;
+/* Bem-vindo e info conta */
+#main_home h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.info-usuario p {
-    margin-bottom: 15px;       /* Espaço entre as linhas */
-    font-size: 1.1em;
-    color: #333;
+
+
+.info_conta span {
+  align-items: center;
+  font-weight: 600;
+  margin-right: 10px;
 }
 
-.info-usuario em {
-    color: #555;
-    font-style: italic;
+/* Blocos de saldo e limite */
+.blocos {
+  display: flex;
+  gap: 20px;
 }
 
-nav {
+.saldo-box, .limite-box {
+  padding: 15px 20px;
+  border-radius: 6px;
+  min-width: 160px;
+}
+
+/* Saldo */
+.saldo-box {
+  background-color: #d4f8d4; /* Verde claro */
+  color: #1b4d1b;
+}
+
+/* Limite */
+.limite-box {
+  background-color: #f9face; /* Azul claro */
+  color: #1a2b5b;
+}
+header nav {
     display: flex;
-    gap: 25px;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+
 }
+
+nav a {
+   text-decoration: none; 
+   color: rgb(32, 32, 32);
+   font-weight:500;
+   transition:background-color 0.3s ease; 
+}
+
+nav a:hover {
+  background-color: #b2d7f8;
+  color:  #5c87ac; /* opcional: melhora contraste */
+}
+

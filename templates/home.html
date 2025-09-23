@@ -1,20 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<section class="info-usuario">
+<section id="main_home">
   <h2>Bem-vindo, {{ conta.nome }}</h2>
-  <p><span class="destaque">Agência:</span> {{ conta.agencia }} | 
-     <span class="destaque">Conta:</span> {{ conta.numero }}</p>
-  <p><span class="destaque">Saldo:</span> R$ {{ "%.2f"|format(conta.saldo) }} | 
-     <span class="destaque">Limite:</span> R$ {{ "%.2f"|format(conta.limite) }}</p>
-  <p>
-    <em>
-      {% if conta.chave_pix %}
-        Chave Pix: {{ conta.chave_pix }}
-      {% else %}
-        Não existe chave Pix cadastrada.
-      {% endif %}
-    </em>
-  </p>
+  <div class="blocos">
+    <div class="saldo-box">
+      <span> Saldo: </span>R$ {{ "%.2f"|format(conta.saldo) }}
+    </div>
+    <div class="limite-box">
+      <span> Limite: </span>R$ {{ "%.2f"|format(conta.limite) }}
+    </div>
+  </div>
 </section>
+    
+
 {% endblock %}

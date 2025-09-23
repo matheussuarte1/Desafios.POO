@@ -6,22 +6,22 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 class Conta:
     contas = {}  # { (agencia, numero): Conta }
 
-    def __init__(self, nome, agencia, numero, senha):
+    def __init__(self, nome, agencia, numero, senha, saldo: float):
         self.nome = nome
         self.agencia = agencia
         self.numero = numero
         self.senha = senha
-        self.saldo = 0.0
+        self.saldo = float(saldo)  # garante que seja float
         self.limite = 0.0
         self.chave_pix = None
         self.extrato = []  # Lista de operações
 
     @classmethod
-    def criar_conta(cls, nome, agencia, numero, senha):
+    def criar_conta(cls, nome, agencia, numero, senha, saldo: float):
         chave = (agencia, numero)
         if chave in cls.contas:
             return None
-        conta = Conta(nome, agencia, numero, senha)
+        conta = Conta(nome, agencia, numero, senha, saldo)
         cls.contas[chave] = conta
         return conta
 
@@ -48,30 +48,32 @@ class Conta:
         self.registrar_operacao(f"Chave Pix cadastrada: {chave}")
 
     def fazer_pix(self, chave_destino, valor):
-        # Se for Pix para a própria conta, é crédito
         if self.chave_pix == chave_destino:
-            self.saldo += valor
-            self.registrar_operacao(f"Pix recebido (próprio): +{valor:.2f}")
-            return True, "Pix creditado na própria conta."
-        # Buscar conta destino
+            return False, "Não é permitido fazer Pix para a própria conta."
+
         destino = next((c for c in Conta.contas.values() if c.chave_pix == chave_destino), None)
-        if destino:
-            if self.saldo + self.limite >= valor:
-                # Calcula quanto usar do saldo e quanto do limite
-                if self.saldo >= valor:
-                    self.saldo -= valor
-                else:
-                    restante = valor - self.saldo
-                    self.saldo = 0
-                    self.limite -= restante  # desconta do limite
-                destino.saldo += valor
-                self.registrar_operacao(f"Pix enviado: -{valor:.2f} para {chave_destino}")
-                destino.registrar_operacao(f"Pix recebido: +{valor:.2f} de {self.nome}")
-                return True, f"Pix de {valor:.2f} enviado para {chave_destino}."
-            else:
-                return False, "Saldo e limite insuficientes."
 
+        if not destino:
+            return False, "Chave Pix de destino não encontrada."
 
+        if valor <= 0:
+            return False, "Valor inválido para Pix."
+
+        if self.saldo + self.limite < valor:
+            return False, "Saldo e limite insuficientes."
+
+        # Débito do valor
+        if self.saldo >= valor:
+            self.saldo -= valor
+        else:
+            restante = valor - self.saldo
+            self.saldo = 0
+            self.limite -= restante
+
+        destino.saldo += valor
+        self.registrar_operacao(f"Pix enviado: -{valor:.2f} para {chave_destino}")
+        destino.registrar_operacao(f"Pix recebido: +{valor:.2f} de {self.nome}")
+        return True, f"Pix de {valor:.2f} enviado para {chave_destino}"
 
 # ------------------------------
 # APP FLASK
@@ -80,8 +82,8 @@ app = Flask(__name__)         #Criando o app com flask
 app.secret_key = "chave_secreta"
 
 # Criar conta de teste
-Conta.criar_conta("João Silva", "001", "12345", "1234")
-Conta.criar_conta("Jorge", "003", "123", "123")
+Conta.criar_conta("João Silva", "001", "12345", "1234", 400)
+Conta.criar_conta("Jorge", "003", "123", "123", 450)
 
 def conta_logada():
     if "agencia" in session and "numero" in session:
@@ -116,16 +118,38 @@ def pix():
         return redirect(url_for("login"))
 
     if request.method == "POST":
-        acao = request.form["acao"]
+        acao = request.form.get("acao")
+
         if acao == "cadastrar":
-            chave = request.form["chave"]
-            conta.cadastrar_pix(chave)
-            flash("Chave Pix cadastrada com sucesso.")
+            chave = request.form.get("chave", "").strip()
+            if not chave:
+                flash("Informe uma chave PIX válida.")
+            else:
+                conta.cadastrar_pix(chave)
+                flash(f"Chave Pix cadastrada: {chave}")
+
         elif acao == "fazer":
-            chave_destino = request.form["chave_destino"]
-            valor = float(request.form["valor"])
-            ok, msg = conta.fazer_pix(chave_destino, valor)
-            flash(msg)
+            chave_destino = request.form.get("chave_destino", "").strip()
+            valor_str = request.form.get("valor", "").strip()
+
+            # Validação de entradas
+            if not chave_destino or not valor_str:
+                flash("Preencha a chave e o valor.", "pix")
+                return redirect(url_for("pix"))
+
+            try:
+                valor = float(valor_str)
+                if valor <= 0:
+                    flash("O valor do PIX deve ser maior que zero.", "pix")
+                    return redirect(url_for("pix"))
+            except ValueError:
+                flash("Informe um valor numérico válido.", "pix")
+                return redirect(url_for("pix"))
+
+            # Realiza o PIX
+            sucesso, msg = conta.fazer_pix(chave_destino, valor)
+            flash(msg, "pix")
+
     return render_template("pix.html", conta=conta)
 
 @app.route("/alterar_limite", methods=["GET", "POST"])
@@ -145,13 +169,20 @@ def alterar_senha():
     conta = conta_logada()
     if not conta:
         return redirect(url_for("login"))
-    if request.method == "POST":
-        nova_senha = request.form["nova_senha"]
-        conta.alterar_senha(nova_senha)
-        flash("Senha alterada com sucesso.")
-        return redirect(url_for("login"))
-    return render_template("alterar_senha.html")
 
+    erro = None  # Variável para mensagem de erro
+
+    if request.method == "POST":
+        senha_atual = request.form["senha_atual"]
+        nova_senha = request.form["nova_senha"]
+
+        if senha_atual != conta.senha:
+            erro = "Senha atual incorreta."
+        else:
+            conta.alterar_senha(nova_senha)
+            flash("Senha alterada com sucesso.", "senha")
+
+    return render_template("alterar_senha.html", conta=conta, erro=erro)
 @app.route("/extrato")
 def extrato():
     conta = conta_logada()
